@@ -20,6 +20,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ---
 
+## [0.4.1] - 2026-10-25
+
+### Added
+- **Automated Terminal Video & Demo Engine (`scripts/generate_demo_video.py`):**
+  - Built an automated video rendering pipeline with Pillow and ffmpeg compiling 360-frame 30fps animation.
+  - Implemented 4 visual demonstration phases:
+    1. CLI startup with ASCII banner and port listening.
+    2. Live Claude Code turn interception and AST parsing.
+    3. Side-by-side comparison showing 42 lines folded into 1-line signature with full type preservation.
+    4. Live dynamic telemetry cards showing 9,064 tokens pruned down to 496 tokens (94.5% net reduction) with 100% SHA-256 cache invariance.
+  - Exported optimized high-resolution GIF (`assets/demo.gif`, 263 KB) and MP4 video (`assets/demo.mp4`, 263 KB).
+  - Embedded animated demonstration directly into GitHub `README.md`.
+
+---
+
+## [0.4.0] - 2026-10-25
+
+### Added
+- **Official GitHub Open-Source Repository Launch:**
+  - Published TokenSentry repository to [`https://github.com/Amankumar006/TokenSentry`](https://github.com/Amankumar006/TokenSentry).
+  - Configured production `.gitignore`, MIT `LICENSE`, `.env.example`, full research documentation index, and distribution build.
+  - Successfully committed and pushed initial release to branch `main`.
+- **Multi-Model & Dual-Protocol Validation Harness (`tests/multi-model-test.ts` / `npm run test:multi`):**
+  - Verified cross-engine compatibility with **Ollama** (`gemma4:31b-cloud`) via OpenAI `/v1/chat/completions` protocol (679ms response time).
+  - Verified Anthropic `/v1/messages` protocol with **Antigravity** (`gemini-3.8-flash`).
+  - Documented zero-cost integration pathways for Groq LPUs (`llama-3.3-70b-versatile`), Google Gemini Flash, and OpenRouter free tiers.
+
+---
+
 ## [0.3.2] - 2026-10-25
 
 ### Added
