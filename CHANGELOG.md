@@ -22,6 +22,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [0.4.1] - 2026-10-25
 
+### Fixed
+- **Terminal Video & Demo Typography Overhaul (`scripts/generate_demo_video.py`):**
+  - Eliminated all text overlapping and bounding collisions across all 4 scenes using dynamic string advance measurement (`font.getbbox()`).
+  - Implemented strict right-alignment anchors for token counters (`1,840 Tokens` vs. `107 Tokens`).
+  - Added dedicated vertical padding blocks preventing callout collision with source code panes.
+  - Recompiled and published studio-grade `assets/demo.mp4` and `assets/demo.gif`.
+
 ### Added
 - **Automated Terminal Video & Demo Engine (`scripts/generate_demo_video.py`):**
   - Built an automated video rendering pipeline with Pillow and ffmpeg compiling 360-frame 30fps animation.
