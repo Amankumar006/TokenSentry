@@ -16,7 +16,7 @@
     "dev": "tsx watch src/bin/tokensentry.ts",
     "build": "tsc",
     "start": "node dist/bin/tokensentry.js",
-    "test": "tsx --test tests/**/*.test.ts",
+    "test": "tsx --test tests/*.test.ts",
     "test:live": "tsx tests/antigravity-integration.ts",
     "test:realtime": "tsx tests/realtime-streaming-test.ts",
     "test:strict": "tsx tests/strict-antigravity-suite.ts",

@@ -30,17 +30,5 @@ jobs:
       - name: Compile TypeScript
         run: npm run build
 
-      - name: Run Core Test Suite
+      - name: Run Complete Test Suite (17 Tests)
         run: npm test
-
-      - name: Verify Prefix SHA-256 Invariance
-        run: npx tsx tests/cache-hash-invariance.test.ts
-
-      - name: Verify Strict Language Edge Cases
-        run: npx tsx tests/strict-edge-cases.test.ts
-
-      - name: Verify Concurrency & Event Loop Stress
-        run: npx tsx tests/concurrency-stress.test.ts
-
-      - name: Verify Real-World Corpus Archetypes
-        run: npx tsx tests/real-world-corpus.test.ts
