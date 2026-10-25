@@ -1,0 +1,55 @@
+{
+  "name": "tokensentry",
+  "version": "0.1.0-alpha",
+  "description": "Cache-preserving local AST context pruner and free-tier fallback proxy for AI coding agents",
+  "main": "dist/server.js",
+  "type": "module",
+  "bin": {
+    "tokensentry": "./dist/bin/tokensentry.js"
+  },
+  "scripts": {
+    "dev": "tsx watch src/bin/tokensentry.ts",
+    "build": "tsc",
+    "start": "node dist/bin/tokensentry.js",
+    "test": "tsx --test tests/**/*.test.ts",
+    "test:live": "tsx tests/antigravity-integration.ts",
+    "test:realtime": "tsx tests/realtime-streaming-test.ts",
+    "test:strict": "tsx tests/strict-antigravity-suite.ts",
+    "test:multi": "tsx tests/multi-model-test.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Amankumar006/TokenSentry.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Amankumar006/TokenSentry/issues"
+  },
+  "homepage": "https://github.com/Amankumar006/TokenSentry#readme",
+  "keywords": [
+    "ai",
+    "agent",
+    "claude-code",
+    "cursor",
+    "tokens",
+    "context-compression",
+    "tree-sitter",
+    "llm-proxy",
+    "groq",
+    "gemini"
+  ],
+  "author": "Aman Kumar",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/cors": "^10.0.2",
+    "commander": "^13.1.0",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.1",
+    "picocolors": "^1.1.1",
+    "web-tree-sitter": "^0.24.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
+  }
+}
