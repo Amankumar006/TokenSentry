@@ -20,6 +20,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ---
 
+## [0.4.2] - 2026-10-25
+
+### Added
+- **GitHub Actions Automated CI/CD Pipeline (`.github/workflows/ci.yml`):**
+  - Integrated dual matrix testing across Node.js 20.x and 22.x on `ubuntu-latest`.
+  - Automated compilation and execution of all 17 unit, AST folding, cache guard, concurrency stress, and edge case tests on every push and pull request.
+  - Added passing CI status badge to repository `README.md`.
+- **Minimal `npx` Packaging Optimization (`package.json`):**
+  - Added `"files"` distribution whitelist, shrinking npm tarball package size by **97.1%** (from 642 kB down to 18.3 kB) for sub-second global `npx tokensentry start` downloads.
+  - Enforced executable permissions (`chmod +x`) on binary distribution entrypoints.
+- **Show HN & Community Launch Kit (`docs/LAUNCH_KIT.md`):**
+  - Complete submission blueprints for Hacker News (`Show HN`), Twitter/X announcement thread with video demo assets, and Reddit communities (`r/ClaudeAI`, `r/LocalLLaMA`, `r/Cursor`).
+
+---
+
 ## [0.4.1] - 2026-10-25
 
 ### Fixed
