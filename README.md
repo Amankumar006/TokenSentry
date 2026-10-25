@@ -8,6 +8,10 @@
 [![Works with Claude Code](https://img.shields.io/badge/Works%20with-Claude%20Code-purple)](https://claude.ai/code)
 [![Works with Cursor](https://img.shields.io/badge/Works%20with-Cursor-black)](https://cursor.com)
 
+<p align="center">
+  <img src="assets/demo.gif" alt="TokenSentry Terminal Demo" width="850" style="border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+</p>
+
 ---
 
 ## 🚀 30-Second Quickstart
