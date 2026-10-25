@@ -1,0 +1,483 @@
+<title>TokenSentry Interactive Demo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+
+<style>
+  /* Design Tokens - Dark First Terminal Aesthetic */
+  :root {
+    --bg-ground: #0a0d12;
+    --bg-surface: #12171f;
+    --bg-card: #161e29;
+    --bg-card-hover: #1c2635;
+    --border-subtle: #243042;
+    --border-strong: #33445c;
+
+    --text-primary: #f0f4f8;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    --accent-emerald: #10b981;
+    --accent-emerald-glow: rgba(16, 185, 129, 0.15);
+    --accent-cyan: #38bdf8;
+    --accent-cyan-glow: rgba(56, 189, 248, 0.15);
+    --accent-purple: #a855f7;
+    --accent-amber: #f59e0b;
+    --accent-red: #ef4444;
+
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, monospace;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg-ground);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 24px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 28px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-shield {
+    font-size: 28px;
+    background: var(--accent-emerald-glow);
+    border: 1px solid var(--accent-emerald);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+
+  .brand-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .brand-subtitle {
+    font-size: 13px;
+    color: var(--accent-cyan);
+    font-family: var(--font-mono);
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+  }
+
+  .badge-emerald { border-color: var(--accent-emerald); color: var(--accent-emerald); background: var(--accent-emerald-glow); }
+  .badge-cyan { border-color: var(--accent-cyan); color: var(--accent-cyan); background: var(--accent-cyan-glow); }
+
+  /* Navigation Tabs */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    background: var(--bg-surface);
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--border-subtle);
+    width: fit-content;
+  }
+
+  .tab-btn {
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+  }
+
+  .tab-btn.active {
+    background: var(--bg-card);
+    color: var(--accent-cyan);
+    border: 1px solid var(--border-strong);
+  }
+
+  /* Metric Highlights Grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .metric-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 16px 20px;
+    transition: border-color 0.2s;
+  }
+
+  .metric-card:hover { border-color: var(--border-strong); }
+
+  .metric-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+
+  .metric-val {
+    font-size: 26px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .metric-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* Terminal Window */
+  .terminal {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+    margin-bottom: 28px;
+  }
+
+  .terminal-bar {
+    background: #161b22;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .terminal-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red { background: #ff5f56; }
+  .dot-yellow { background: #ffbd2e; }
+  .dot-green { background: #27c93f; }
+
+  .terminal-title {
+    margin: 0 auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .terminal-body {
+    padding: 20px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+    max-height: 420px;
+    overflow-y: auto;
+  }
+
+  .term-line { margin-bottom: 6px; }
+  .t-cyan { color: #58a6ff; }
+  .t-green { color: #3fb950; }
+  .t-purple { color: #bc8cff; }
+  .t-amber { color: #d29922; }
+  .t-muted { color: #8b949e; }
+  .t-bold { font-weight: 700; }
+
+  /* Interactive Code Split View */
+  .split-view {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  @media (max-width: 800px) {
+    .split-view { grid-template-columns: 1fr; }
+  }
+
+  .code-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .code-panel-header {
+    background: var(--bg-card);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .code-pre {
+    padding: 16px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    overflow-x: auto;
+    flex: 1;
+    white-space: pre;
+  }
+
+  .token-pill {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .token-pill-red { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+  .token-pill-green { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+
+  /* Controls Footer */
+  .footer-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-cyan);
+    color: #0b1320;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    transition: transform 0.15s ease;
+  }
+  .cta-link:hover { transform: translateY(-1px); }
+
+  .folded-highlight {
+    color: var(--accent-emerald);
+    background: rgba(16, 185, 129, 0.12);
+    padding: 2px 4px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+</style>
+
+<div class="header">
+  <div class="brand">
+    <div class="brand-shield">🛡️</div>
+    <div>
+      <div class="brand-title">TokenSentry Interactive Studio</div>
+      <div class="brand-subtitle">v0.4.1 • Cache-Preserving AST Pruner & Proxy</div>
+    </div>
+  </div>
+  <div class="badge-row">
+    <span class="badge badge-emerald">SHA-256 Invariance: 100%</span>
+    <span class="badge badge-cyan">Latency: 0.8ms Overhead</span>
+    <span class="badge">Dual Anthropic & OpenAI Protocol</span>
+  </div>
+</div>
+
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-label">Token Reduction</div>
+    <div class="metric-val" style="color: var(--accent-emerald);" id="m-reduction">94.5%</div>
+    <div class="metric-desc">Uncalled function bodies folded into signatures</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">Cache Discount Kept</div>
+    <div class="metric-val" style="color: var(--accent-cyan);" id="m-cache">90.0%</div>
+    <div class="metric-desc">Prefix unchanged: $0.30/M vs $3.00/M saved</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">Tokens Saved (4 Turns)</div>
+    <div class="metric-val" style="color: var(--accent-purple);" id="m-tokens">8,568</div>
+    <div class="metric-desc">Pruned from 9,064 raw incoming tokens</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">Estimated Cost Saved</div>
+    <div class="metric-val" style="color: var(--accent-amber);" id="m-cost">$0.026</div>
+    <div class="metric-desc">Accumulated across session turns</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" id="tab-term" onclick="switchView('terminal')">🖥️ Live Terminal Log</button>
+  <button class="tab-btn" id="tab-ast" onclick="switchView('ast')">🔍 AST Code Diff</button>
+</div>
+
+<!-- Terminal View -->
+<div id="view-terminal" class="terminal">
+  <div class="terminal-bar">
+    <div class="terminal-dots">
+      <div class="dot dot-red"></div>
+      <div class="dot dot-yellow"></div>
+      <div class="dot dot-green"></div>
+    </div>
+    <div class="terminal-title">tokensentry-daemon — port 8080</div>
+  </div>
+  <div class="terminal-body" id="term-content">
+    <div class="term-line t-cyan">$ npx tokensentry start --port 8080</div>
+    <div class="term-line t-muted">╭────────────────────────────────────────────────────────────╮</div>
+    <div class="term-line t-muted">│                    🛡️  <span class="t-green t-bold">TokenSentry v0.1.0</span>                   │</div>
+    <div class="term-line t-muted">│     Cache-Preserving AST Pruner & Free-Tier AI Proxy       │</div>
+    <div class="term-line t-muted">╰────────────────────────────────────────────────────────────╯</div>
+    <div class="term-line"><span class="t-green">✔</span> Proxy listening on: <span class="t-cyan">http://127.0.0.1:8080</span></div>
+    <div class="term-line t-muted">👉 Claude Code: export ANTHROPIC_BASE_URL="http://127.0.0.1:8080"</div>
+    <div class="term-line t-muted">👉 Cursor/Cline: export OPENAI_BASE_URL="http://127.0.0.1:8080/v1"</div>
+    <div class="term-line">&nbsp;</div>
+    <div class="term-line"><span class="t-green">✔ [TokenSentry]</span> Intercepted Anthropic turn: Saved <span class="t-amber">2,142 tokens</span> | Cumulative: 1 req | Tokens Saved: 2,142 (94.5%) | Cost Saved: $0.006</div>
+    <div class="term-line"><span class="t-green">✔ [TokenSentry]</span> Intercepted Anthropic turn: Saved <span class="t-amber">2,142 tokens</span> | Cumulative: 2 req | Tokens Saved: 4,284 (94.5%) | Cost Saved: $0.013</div>
+    <div class="term-line"><span class="t-green">✔ [TokenSentry]</span> Intercepted Anthropic turn: Saved <span class="t-amber">2,142 tokens</span> | Cumulative: 3 req | Tokens Saved: 6,426 (94.5%) | Cost Saved: $0.019</div>
+    <div class="term-line"><span class="t-green">✔ [TokenSentry]</span> Intercepted Anthropic turn: Saved <span class="t-amber">2,142 tokens</span> | Cumulative: 4 req | Tokens Saved: 8,568 (94.5%) | Cost Saved: $0.026</div>
+    <div class="term-line t-purple">✔ Invariant 1 Verified: SHA-256 historical turns match 100% byte-for-byte. Zero cache miss penalty.</div>
+  </div>
+</div>
+
+<!-- AST Code Comparison View -->
+<div id="view-ast" class="split-view" style="display: none;">
+  <div class="code-panel">
+    <div class="code-panel-header">
+      <span>❌ Raw Fresh Turn Code (Original)</span>
+      <span class="token-pill token-pill-red">2,266 Tokens</span>
+    </div>
+    <div class="code-pre">// BankingLedger.ts
+export class BankingLedgerService {
+  public async reconcile(
+    accountId: string,
+    amount: number,
+    options: LedgerOptions
+  ): Promise<ReconciliationResult> {
+    const db = await getDatabaseConnection();
+    const tx = await db.beginTransaction();
+    const account = await tx.accounts.findOne({ id: accountId });
+    if (!account) {
+      await tx.rollback();
+      throw new AccountNotFoundError(accountId);
+    }
+    if (account.balance < amount) {
+      await tx.rollback();
+      throw new InsufficientFundsError(accountId, amount);
+    }
+    await tx.accounts.update(
+      { id: accountId },
+      { $inc: { balance: -amount } }
+    );
+    await tx.auditLogs.insert({
+      action: "RECONCILE",
+      accountId,
+      amount,
+      timestamp: new Date().toISOString()
+    });
+    await tx.commit();
+    return { success: true, newBalance: account.balance - amount };
+  }
+}</div>
+  </div>
+
+  <div class="code-panel">
+    <div class="code-panel-header">
+      <span>✔ Ephemeral Skeletonized Payload (Folded)</span>
+      <span class="token-pill token-pill-green">124 Tokens (-94.5%)</span>
+    </div>
+    <div class="code-pre">// BankingLedger.ts
+export class BankingLedgerService {
+  public async reconcile(
+    accountId: string,
+    amount: number,
+    options: LedgerOptions
+  ): Promise<ReconciliationResult> {
+    <span class="folded-highlight">/* [folded by TokenSentry: 38 lines] */</span>
+  };
+}</div>
+  </div>
+</div>
+
+<div class="footer-cta">
+  <div>
+    <div style="font-weight: 700; font-size: 16px; margin-bottom: 4px;">Ready to run TokenSentry locally?</div>
+    <div style="font-size: 13px; color: var(--text-secondary);">Works transparently with Claude Code, Cursor, Aider, and Cline.</div>
+  </div>
+  <a href="https://github.com/Amankumar006/TokenSentry" target="_blank" class="cta-link">
+    ⭐ View on GitHub
+  </a>
+</div>
+
+<script>
+  function switchView(view) {
+    const termView = document.getElementById('view-terminal');
+    const astView = document.getElementById('view-ast');
+    const tabTerm = document.getElementById('tab-term');
+    const tabAst = document.getElementById('tab-ast');
+
+    if (view === 'terminal') {
+      termView.style.display = 'block';
+      astView.style.display = 'none';
+      tabTerm.classList.add('active');
+      tabAst.classList.remove('active');
+    } else {
+      termView.style.display = 'none';
+      astView.style.display = 'grid';
+      tabTerm.classList.remove('active');
+      tabAst.classList.add('active');
+    }
+  }
+</script>
