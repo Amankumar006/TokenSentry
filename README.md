@@ -3,6 +3,7 @@
 > **Cache-Preserving AST Context Pruner & Free-Tier Proxy for AI Coding Agents**  
 > Cut your token bills by 50–70% and eliminate `HTTP 429 Rate Limits` without breaking Anthropic's 90% prompt cache discount.
 
+[![CI](https://github.com/Amankumar006/TokenSentry/actions/workflows/ci.yml/badge.svg)](https://github.com/Amankumar006/TokenSentry/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org/)
 [![Works with Claude Code](https://img.shields.io/badge/Works%20with-Claude%20Code-purple)](https://claude.ai/code)
